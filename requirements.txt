@@ -6,5 +6,6 @@ numpy
 feedparser
 MinMaxScaler
 Sequential
-LSTM, Dense
+LSTM
+Dense
 SentimentIntensityAnalyzer
