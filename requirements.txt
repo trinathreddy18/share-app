@@ -4,3 +4,7 @@ pandas
 plotly
 numpy
 feedparser
+MinMaxScaler
+Sequential
+LSTM, Dense
+SentimentIntensityAnalyzer
