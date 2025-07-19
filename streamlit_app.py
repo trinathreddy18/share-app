@@ -115,6 +115,7 @@ def lstm_forecast(df, days=1):
     forecast_price = scaler.inverse_transform(prediction)[0][0]
     return round(forecast_price, 2)
 
+
 # --- Sentiment Analysis Function ---
 # --- Sentiment Analysis Function ---
 def get_sentiment_score_from_google_news(stock_name):
@@ -201,15 +202,36 @@ for ticker in stock_list:
     with col_data:
         with st.expander("🔍 Data"):
             st.dataframe(df.tail(5), use_container_width=True)
+            
+        # --- Last Close Price ---
+        last_close = df['Close'].iloc[-1]
+        last_close_rounded = round(last_close)  # or use int() if preferred
 
         # --- LSTM Forecast ---
         forecast_price = lstm_forecast(df)
         if forecast_price:
-            st.markdown(f"📈 **LSTM Forecasted Close (Next Day)**: ₹ `{forecast_price}`")
+         # --   st.markdown(f"💰 **Last Close Price**: ₹ `{float(last_close)}`")
+            st.markdown(
+                f"💰 **Last Close Price**: ₹ <span style='color:orange; font-weight:bold;'>{float(last_close):.2f}</span>",
+                unsafe_allow_html=True
+            )
+            
+            # Determine color and emoji
+            if forecast_price > float(last_close):
+                st.markdown(
+                    f"📈 **LSTM Forecasted (Next Day)**: ₹ <span style='color:green; font-weight:bold;'>{forecast_price:.2f}</span>",
+                    unsafe_allow_html=True
+                )
+            else:
+                st.markdown(
+                    f"📉 **LSTM Forecasted (Next Day)**: ₹ <span style='color:red; font-weight:bold;'>{forecast_price:.2f}</span>",
+                    unsafe_allow_html=True
+                )        
         else:
             st.warning("📉 Not enough data for LSTM prediction")
 
         # --- Sentiment Score (Mock Data) ---
         sentiment = get_sentiment_score_from_google_news(ticker)
         sentiment_label = "Positive" if sentiment > 0.2 else "Negative" if sentiment < -0.2 else "Neutral"
-        st.markdown(f"📰 **Sentiment Score**: `{sentiment}` ({sentiment_label})")
+        st.markdown(f"📰 **Sentiment Score**: <span style='font-weight:bold;'>{sentiment} ({sentiment_label})</span>",
+                    unsafe_allow_html=True)
