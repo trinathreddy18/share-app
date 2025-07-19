@@ -219,16 +219,16 @@ for ticker in stock_list:
             # Determine color and emoji
             if forecast_price > float(last_close):
                 st.markdown(
-                    f"📈 **LSTM Forecasted (Next Day)**: ₹ <span style='color:green; font-weight:bold;'>{forecast_price:.2f}</span>",
+                    f"📈 **Forecasted (Next Day)**: ₹ <span style='color:green; font-weight:bold;'>{forecast_price:.2f}</span>",
                     unsafe_allow_html=True
                 )
             else:
                 st.markdown(
-                    f"📉 **LSTM Forecasted (Next Day)**: ₹ <span style='color:red; font-weight:bold;'>{forecast_price:.2f}</span>",
+                    f"📉 **Forecasted (Next Day)**: ₹ <span style='color:red; font-weight:bold;'>{forecast_price:.2f}</span>",
                     unsafe_allow_html=True
                 )        
         else:
-            st.warning("📉 Not enough data for LSTM prediction")
+            st.warning("📉 Not enough data for prediction (at least 3 months of data is required)")
 
         # --- Sentiment Score (Mock Data) ---
         sentiment = get_sentiment_score_from_google_news(ticker)
