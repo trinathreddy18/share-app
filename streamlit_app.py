@@ -206,16 +206,16 @@ for ticker in stock_list:
         # --- Last Close Price ---
         last_close = df['Close'].iloc[-1]
         last_close_rounded = round(last_close)  # or use int() if preferred
+        
+         # --   st.markdown(f"💰 **Last Close Price**: ₹ `{float(last_close)}`")
+        st.markdown(
+            f"💰 **Last Close Price**: ₹ <span style='color:orange; font-weight:bold;'>{float(last_close):.2f}</span>",
+            unsafe_allow_html=True
+        )
 
         # --- LSTM Forecast ---
         forecast_price = lstm_forecast(df)
         if forecast_price:
-         # --   st.markdown(f"💰 **Last Close Price**: ₹ `{float(last_close)}`")
-            st.markdown(
-                f"💰 **Last Close Price**: ₹ <span style='color:orange; font-weight:bold;'>{float(last_close):.2f}</span>",
-                unsafe_allow_html=True
-            )
-            
             # Determine color and emoji
             if forecast_price > float(last_close):
                 st.markdown(
